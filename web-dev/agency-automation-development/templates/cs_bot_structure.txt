@@ -1,0 +1,10 @@
+# Basic Modular Structure for AI Agency Tools
+
+/project_root
+├── voice.py       # Interface layer (STT/TTS or Terminal simulation)
+├── database.py    # Data layer (Connection, Schema, Seeding)
+└── main.py        # Orchestration layer (Agent logic & state machine)
+
+# Database seeding is critical for client demos. Always include a method to 
+# inject mock "VIP" customers to show the agent's ability to recognize 
+# high-value clients.
