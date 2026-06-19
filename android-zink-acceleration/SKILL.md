@@ -42,6 +42,26 @@ echo 'export GALLIUM_DRIVER=zink' >> ~/.bashrc
 echo 'export MESA_LOADER_DRIVER_OVERRIDE=zink' >> ~/.bashrc
 ```
 
+## Proot-distro GPU bridge
+
+For Proot-Ubuntu (and other distributions) to access the GPU, a server must be running in the native Termux environment to bridge OpenGL commands to the Vulkan driver.
+
+**Start the GPU bridge (`virgl_test_server`) in the native Termux session:**
+```bash
+MESA_NO_ERROR=1 MESA_GL_VERSION_OVERRIDE=4.3COMPAT MESA_GLES_VERSION_OVERRIDE=3.2 GALLIUM_DRIVER=zink ZINK_DESCRIPTORS=lazy virgl_test_server --use-egl-surfaceless --use-gles &
+```
+
+**To make this start automatically on Termux open**, create a separate script and source it in `~/.bashrc`. This ensures the bridge is always active before you enter a proot container:
+```bash
+echo 'MESA_NO_ERROR=1 MESA_GL_VERSION_OVERRIDE=4.3COMPAT MESA_GLES_VERSION_OVERRIDE=3.2 GALLIUM_DRIVER=zink ZINK_DESCRIPTORS=lazy virgl_test_server --use-egl-surfaceless --use-gles &' > ~/.bashrc_gpu_accel
+echo 'source ~/.bashrc_gpu_accel' >> ~/.bashrc
+```
+
+**Run a GPU program inside `proot-distro`** by exporting the driver and override variables inside the container so it uses the native Termux Zink bridge:
+```bash
+proot-distro login ubuntu --termux-home -- bash -c "export GALLIUM_DRIVER=zink MESA_GL_VERSION_OVERRIDE=4.0 && program_name"
+```
+
 ## Verification
 Run the following to confirm the GPU is being used:
 ```bash
@@ -53,3 +73,4 @@ glxinfo | grep "OpenGL renderer"
 ## Pitfalls
 - **ELF Header Mismatch:** Zink works natively in Termux. DO NOT try to point a `proot-distro` (Ubuntu) guest to Termux's `.so` files; it will fail with an ELF header error. Use the native Termux environment for maximum speed.
 - **ICD Filename:** The exact filename can change (e.g., `freedreno_icd.aarch64.json`). Always verify the file exists in `/data/data/com.termux/files/usr/share/vulkan/icd.d/`.
+- **GitHub API Integration:** When publishing related tools or configs to GitHub, use the GitHub API (`/user/repos`) to create the repository before attempting to push. Use tokens in the remote URL (`https://<token>@github.com/...`) for seamless authentication in non-interactive environments.

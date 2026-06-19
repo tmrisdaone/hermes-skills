@@ -1,8 +1,8 @@
 # 🚀 Hermes Termux Skill Library
 ### *The Autonomous Powerhouse for Android*
 
-![GitHub License](https://img.shields.io/github/license/jaydenmayers2436/hermes-skills?style=for-the-badge&color=cyan)
-![GitHub stars](https://img.shields.io/github/stars/jaydenmayers2436/hermes-skills?style=for-the-badge&color=magenta)
+![GitHub License](https://img.shields.io/github/license/tmrisdaone/hermes-skills?style=for-the-badge&color=cyan)
+![GitHub stars](https://img.shields.io/github/stars/tmrisdaone/hermes-skills?style=for-the-badge&color=magenta)
 ![Platform](https://img.shields.io/badge/Platform-Android%20(Termux)-green?style=for-the-badge)
 ![GPU](https://img.shields.io/badge/GPU-Zink%20Acceleration-blue?style=for-the-badge)
 
@@ -36,6 +36,7 @@ Unlike generic libraries, this repo focuses on **hardware-level integration**, b
 | **Deployment** | `termux-deployment` | Server-side deployment workflows |
 | **Infrastructure**| `termux-package-management` | Optimized ARM64 package handling |
 | **Web** | `modern-web-hosting-termux` | High-visual web deployment on mobile |
+| **Web** | `termux-web-hosting` | Tunneled local website exposure (cloudflared, SSH tunnels) |
 
 ## 🚀 Quick Start
 
